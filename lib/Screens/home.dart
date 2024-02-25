@@ -1,19 +1,38 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:to_do_list/Constants/colors.dart';
+import '../Models/todo.dart';
+import '../Constants/colors.dart';
+import '../Widgets/todo_item.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final toDoLists = ToDo.todoList();
     return Scaffold(
       backgroundColor: tdBGColor,
       appBar: _buildAppBar(),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        child: Column(children: [SearchBox()]),
+        child: Column(children: [
+          SearchBox(),
+          Expanded(
+            child: ListView(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 50, bottom: 50),
+                  child: Text(
+                    "All ToDos",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                for (ToDo todo in toDoLists) TodoItem(),
+              ],
+            ),
+          )
+        ]),
       ),
     );
   }
